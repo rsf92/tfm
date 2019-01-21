@@ -1,21 +1,37 @@
-year,type,gov,%gov,oposition,%op,%part
-1977,gen,ucd,34.44,psoe,29.32,78.83
-1979,gen,ucd,34.84,psoe,30.40,67.43
-1982,gen,psoe,48.11,ap,26.36,79.97
-1986,gen,psoe,44.06,cp,25.97,70.49
-1987,eu,psoe,39.06,ap,24.65,68.52
-1989,eu,psoe,39.57,pp,21.41,54.71
-1989,gen,psoe,39.60,pp,25.79,69.74
-1993,gen,psoe,38.78,pp,34.76,76.44
-1994,eu,pp,40.12,psoe,30.79,59.14
-1996,gen,pp,38.79,psoe,37.63,77.38
-1999,eu,pp,39.74,psoe,35.33,63.05
-2000,gen,pp,44.52,psoe,34.16,68.71
-2004,gen,psoe,42.59,pp,37.71,75.66
-2004,eu,psoe,43.46,pp,41.21,45.14
-2008,gen,psoe,43.87,pp,39.94,73.85
-2009,eu,pp,42.12,psoe,38.78,44.90
-2011,gen,pp,44.63,psoe,28.76,68.94
-2014,eu,pp,26.09,psoe,23.01,43.81
-2015,gen,pp,28.71,psoe,22.01,69.67
-2016,gen,pp,33.01,psoe,22.63,66.48
+#########################################
+Datos de entrada
+Año de la elección
+Tipo de elección (europea o general)
+Partido de gobierno actual (valoración ideológica)
+Variación del PIB desde la anterior elección
+Variación del PIB el curso curso anterior
+Variación del paro desde la anterior elección
+Variación del paro el curso anterior
+Variación
+Salidas
+Partido que gana (valoración ideológica)
+Porcentaje de partido que gana 
+Partido que lidera la oposición (valoración ideológica)
+Porcentaje de partido que lidera la oposición
+Participación
+#########################################year,type,gov,%gov,oposition,%op,%part
+1977,gen,ucd,15.39,ucd,34.44,psoe,29.32,78.83
+1979,gen,ucd,62.03,ucd,34.84,psoe,30.40,67.43
+1982,gen,ucd,-8.67,psoe,48.11,ap,26.36,79.97
+1986,gen,psoe,28.25,psoe,44.06,cp,25.97,70.49
+1987,eu,psoe,26.82,psoe,39.06,ap,24.65,68.52
+1989,eu,psoe,30.12,psoe,39.57,pp,21.41,54.71
+1989,gen,psoe,0,psoe,39.60,pp,25.79,69.74
+1993,gen,psoe,26.59,psoe,38.78,pp,34.76,76.44
+1994,eu,psoe,1.04,pp,40.12,psoe,30.79,59.14
+1996,gen,pp,21.14,pp,38.79,psoe,37.63,77.38
+1999,eu,pp,-1.21,pp,39.74,psoe,35.33,63.05
+2000,gen,pp,-5.9,pp,44.52,psoe,34.16,68.71
+2004,gen,pp,79.64,psoe,42.59,pp,37.71,75.66
+2004,eu,psoe,0,psoe,43.46,pp,41.21,45.14
+2008,gen,psoe,52.86,psoe,43.87,pp,39.94,73.85
+2009,eu,psoe,-8.31,pp,42.12,psoe,38.78,44.90
+2011,gen,pp,-0.7,pp,44.63,psoe,28.76,68.94
+2014,eu,pp,-7.47,pp,26.09,psoe,23.01,43.81
+2015,gen,pp,-13,pp,28.71,psoe,22.01,69.67
+2016,gen,pp,3.29,pp,33.01,psoe,22.63,66.48
