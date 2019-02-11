@@ -42,7 +42,7 @@ id serial primary key,
 name text,
 economics int,
 civil int,
-power int
+authority int
 );
 
 create table if not exists electoral_result(
