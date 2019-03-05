@@ -13,10 +13,6 @@ typedef struct t_autonomy{
 	char autonomy[SIZE];
 }autonomy;
 
-typedef struct t_municipality{
-	int id;
-	char municipality[SIZE];
-}municipality;
 
 typedef struct t_aut_prov{
 	int id_aut;
@@ -24,13 +20,9 @@ typedef struct t_aut_prov{
 
 }aut_prov;
 
-typedef struct t_prov_mun{
-	int id_prov;
-	int id_mun;
-}prov_mun;
 
 typedef struct t_census{
-	int mun_id;
+	int prov_id;
 	int year;
 	int census;
 }census;
@@ -48,7 +40,7 @@ typedef struct t_party{
 typedef struct t_elect_result{
  int party_id;
  int year;
- int mun_id;
+ int prov_id;
  int votes;
 }elect_result;
 #endif
