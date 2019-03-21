@@ -7,7 +7,6 @@
 
 #define AUTONOMIES 19
 #define PROVINCES 52
-#define MUNICIPALITIES 1//5000
 #define CENSUS	100000
 #define PARTIES 700
 
@@ -23,11 +22,11 @@ int add_aut_province(int prov, int aut, aut_prov *array);
 
 void print_aut_provinces(aut_prov * array);
 
-int add_census(int prov_id, int year, int cen, census *array);
+int add_census(int prov_id, int year, long cen, census *array);
 
 int insert_parties(char * line, party * parties);
 
-int insert_elect_result(int votes,int mun_id, int year, int party_id, elect_result * results);
+int insert_elect_result(long votes,int mun_id, int year, int party_id, elect_result * results);
 
 void print_results(elect_result ** results, int years);
 
@@ -37,10 +36,13 @@ void print_census(census * array);
 
 void clean_string(char * str);
 
+int getPartyId(char * name, party *  parties);
+
 int main(int argc, char ** argv){
 
 	FILE * f;
-	char line[1000], lineyear[1000];
+	char line[1000], lineyear[1000], line2[1000];
+	long censusVal;
 	autonomy aut[AUTONOMIES]={0,""};
 	province prov[PROVINCES]={0,""};
 	aut_prov aut_provs[PROVINCES]={0,0};
@@ -55,7 +57,8 @@ int main(int argc, char ** argv){
 	char votes[SIZE];
 	int id;
 	
-	int i,j, num, aut_id, prov_id, year, parties_year, vote_res;
+	int i,j, num, aut_id, prov_id, year, parties_year;
+        long vote_res;
 	char * p=province_name;
 	if (argc <= 2){
 		printf("Error! No argument used: \n");
@@ -80,32 +83,34 @@ int main(int argc, char ** argv){
 		strcpy(lineyear, line);
 		parties_year=insert_parties(lineyear, year_parties);
 		insert_parties(line, parties);
-		election[i]=(elect_result *)calloc(PARTIES*MUNICIPALITIES, sizeof(elect_result));
+		election[i]=(elect_result *)calloc(PARTIES*PROVINCES, sizeof(elect_result));
 		if(election[i] == NULL){
 			free(election);
 			return -1;		
 		}
 		while (fgets (line, 1000, f)){	
-			
-			strcpy(autonomy_name,strtok(line,","));	
+			strcpy(line2, line);
+			strcpy(autonomy_name,strtok(line,";"));	
 			clean_string(autonomy_name);		
 			aut_id=add_autonomy(autonomy_name, aut);
-			strtok(NULL, ",");
-			strcpy(province_name, strtok(NULL, ","));
+			strtok(NULL, ";");
+			strcpy(province_name, strtok(NULL, ";"));
 			clean_string(province_name);
 			prov_id = add_province(province_name, prov);
 			strcpy(province_name, "");
 			add_aut_province(prov_id , aut_id, aut_provs);
-			strtok(NULL, ",");strtok(NULL, ",");
-			break;
-			strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");
-			add_census(prov_id, year, atoi(strtok(NULL, ",")), cen);
-			strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");
+			strtok(NULL, ";");strtok(NULL, ";");
+			strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");
+			censusVal = atol(strtok(NULL, ";"));
+			add_census(prov_id, year,censusVal, cen);
+			strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");
 			for(j=0; j<parties_year; j++){
-				strcpy(votes, strtok(NULL, ","));
+				strcpy(votes, strtok(NULL, ";\n"));
 				clean_string(votes);
-				vote_res=atoi(votes);
-				insert_elect_result(vote_res,prov_id, year,year_parties[j].id , election[i]);							
+				vote_res=atol(votes);
+				if(!strcmp(year_parties[j].name, "PSOE"))
+					id=1;
+				insert_elect_result(vote_res,prov_id, year,getPartyId(year_parties[j].name, parties) , election[i]);							
 			}
 
 		}
@@ -113,11 +118,9 @@ int main(int argc, char ** argv){
 	print_autonomies(aut);
 	print_provinces(prov);
 	print_aut_provinces(aut_provs);
-	/*print_municipalities(munic);
-	print_prov_mun(prov_mun);
 	print_census(cen);
 	print_parties(parties);
-	print_results(election, num);*/
+	print_results(election, num);
 	return 0;
 }
 
@@ -159,7 +162,7 @@ int add_province(char * province_name, province *array){
 		}
 
 	}
-	printf("Not enough provinces");
+	printf("Not enough provinces %s\n", province_name);
 	return 0;
 }
 
@@ -180,17 +183,17 @@ int add_aut_province(int prov, int aut, aut_prov *array){
 		}
 
 	}
-	printf("Not enough provinces-autonomies");
+	printf("Not enough provinces-autonomies %d %d", aut, prov);
 	return 0;	
 }
 
-int add_census(int prov_id, int year, int cen, census *array){
+int add_census(int prov_id, int year, long cen, census *array){
 
 	int i;
 	if( array == NULL){
 		return -1;	
 	}
-
+	
 	for(i=0; i<CENSUS; i++){
 		
 		if(array[i].prov_id == prov_id && array[i].year == year){
@@ -217,25 +220,25 @@ int insert_parties(char * line, party * parties){
 	char line_copy[1000];
 	char *p=line;
 	strcpy(line_copy,line);
-	strtok(line_copy, ",");
-	strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");
-	strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");strtok(NULL, ",");
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	p=strstr(p, ",")+1;
-	while( (p=strstr(p, ","))!= NULL){
+	strtok(line_copy, ";");
+	strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");
+	strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");strtok(NULL, ";");
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	p=strstr(p, ";")+1;
+	while( (p=strstr(p, ";"))!= NULL){
 		p++;
-		strcpy(name, strtok(NULL, ","));	
+		strcpy(name, strtok(NULL, ";"));	
 		for(i=0; i<PARTIES; i++){
 			
 			if(!strcmp(parties[i].name,name))
@@ -263,14 +266,13 @@ int insert_parties(char * line, party * parties){
 	return i;
 }
 
-int insert_elect_result(int votes,int prov_id, int year, int party_id, elect_result * results){
+int insert_elect_result(long votes,int prov_id, int year, int party_id, elect_result * results){
 
 	int i;
 	if( results == NULL){
 		return -1;	
 	}
-
-	for(i=0; i<(PARTIES*MUNICIPALITIES); i++){
+	for(i=0; i<(PARTIES*PROVINCES); i++){
 		
 		if(results[i].prov_id == prov_id && results[i].party_id == party_id){
 			results[i].votes+=votes;
@@ -284,7 +286,6 @@ int insert_elect_result(int votes,int prov_id, int year, int party_id, elect_res
 		}
 
 	}
-	printf("Not enough results\n");
 	return 0;
 
 }
@@ -295,8 +296,8 @@ void print_results(elect_result ** results, int years){
 	if(results == NULL)
 		return;
 	for(j=0; j<years;j++)
-		for(i=0; i<PARTIES*MUNICIPALITIES && results[j][i].party_id != 0; i++){
-			printf("insert into electoral_result values (%d,%d,%d,%d);\n", results[j][i].party_id, results[j][i].year, results[j][i].prov_id,results[j][i].votes);
+		for(i=0; i<PARTIES*PROVINCES && results[j][i].party_id != 0; i++){
+			printf("insert into electoral_result values (%d,%d,%d,%ld);\n", results[j][i].party_id, results[j][i].year, results[j][i].prov_id,results[j][i].votes);
 		}
 }
 
@@ -307,7 +308,7 @@ void print_parties(party * array){
 		return;
 
 	for(i=0; i<PARTIES && array[i].id != 0; i++){
-		printf("insert into party values (%d, %s,%d,%d, %d);\n", array[i].id, array[i].name, array[i].economics,array[i].civil, array[i].authority);
+		printf("insert into party values (%d, '%s',%d,%d, %d);\n", array[i].id, array[i].name, array[i].economics,array[i].civil, array[i].authority);
 	}
 }
 
@@ -319,7 +320,7 @@ void print_census(census * array){
 		return;
 
 	for(i=0; i<CENSUS && array[i].prov_id != 0 && array[i].year != 0; i++){
-		printf("insert into census values (%d, %d, %d);\n", array[i].prov_id, array[i].year, array[i].census);
+		printf("insert into census values (%d, %d, %ld);\n", array[i].prov_id, array[i].year, array[i].census);
 	}
 }
 
@@ -371,4 +372,18 @@ void clean_string(char * str){
 			str[i]='\0';
 		else
 		  str[i] = tolower(str[i]);	
+}
+
+int getPartyId(char * name, party *  parties){
+	
+	int i;
+
+	for(i =0; i< PARTIES; i++){
+		if(strcmp(parties[i].name, name) == 0)
+			return parties[i].id;
+	
+	}
+		
+	return 0;
+
 }

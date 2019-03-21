@@ -1,0 +1,13 @@
+﻿--select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 1977  group by party.name order by sum(votes) desc limit 5;
+-- REVIEW select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 1979  group by party.name order by sum(votes) desc limit 5;
+-- REVIEW select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 1982  group by party.name order by sum(votes) desc limit 5;
+--select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 1986  group by party.name order by sum(votes) desc limit 5;
+-- REVIEW select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 1989  group by party.name order by sum(votes) desc limit 5;
+--select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 1993  group by party.name order by sum(votes) desc limit 5;
+--select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 1996  group by party.name order by sum(votes) desc limit 5;
+-- REVIEW select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 2000  group by party.name order by sum(votes) desc limit 5;
+--select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 2004  group by party.name order by sum(votes) desc limit 5;
+-- REVIEW select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 2008  group by party.name order by sum(votes) desc limit 5;
+-- REVIEW select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 2011  group by party.name order by sum(votes) desc limit 5;
+-- REVIEW select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 2015  group by party.name order by sum(votes) desc limit 5;
+--select party.name, sum(votes) from party, electoral_result where party.id = electoral_result.party and electoral_result.year = 2016  group by party.name order by sum(votes) desc limit 5;

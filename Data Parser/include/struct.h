@@ -24,7 +24,7 @@ typedef struct t_aut_prov{
 typedef struct t_census{
 	int prov_id;
 	int year;
-	int census;
+	long census;
 }census;
 
 typedef struct t_party{
@@ -41,6 +41,6 @@ typedef struct t_elect_result{
  int party_id;
  int year;
  int prov_id;
- int votes;
+ long votes;
 }elect_result;
 #endif
