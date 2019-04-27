@@ -1,8 +1,10 @@
-﻿drop table if exists autonomy;
-drop table if exists province;
-drop table if exists municipality;
+﻿drop table if exists electoral_result;
+drop table if exists census;
+drop table if exists party;
 drop table if exists autonomy_province;
-drop table if exists province_municipality;
+drop table if exists autonomy;
+drop table if exists province;
+
 create table if not exists autonomy(
 id serial primary key,
 name text

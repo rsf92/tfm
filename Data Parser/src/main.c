@@ -108,8 +108,6 @@ int main(int argc, char ** argv){
 				strcpy(votes, strtok(NULL, ";\n"));
 				clean_string(votes);
 				vote_res=atol(votes);
-				if(!strcmp(year_parties[j].name, "PSOE"))
-					id=1;
 				insert_elect_result(vote_res,prov_id, year,getPartyId(year_parties[j].name, parties) , election[i]);							
 			}
 
@@ -241,7 +239,7 @@ int insert_parties(char * line, party * parties){
 		strcpy(name, strtok(NULL, ";"));	
 		for(i=0; i<PARTIES; i++){
 			
-			if(!strcmp(parties[i].name,name))
+			if(!strcmp(parties[i].name,name) && parties[i].id != 0)
 				break;
 			else if (parties[i].id== 0){
 				parties[i].id = i+1;
