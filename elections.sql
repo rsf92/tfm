@@ -46,3 +46,9 @@ prov int references province(id),
 votes int,
 primary key (party,year,prov)
 );
+
+create table if not exists election(
+year int primary key,
+unemp real,
+pib real
+);

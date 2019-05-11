@@ -1,0 +1,13 @@
+﻿insert into election values(1977, 13.68,1);
+insert into election values(1979, 33.62,1.9);
+insert into election values(1982, -3.35,1.6);
+insert into election values(1986, 39.01,-0.9);
+insert into election values(1989, 10.27,-1.5);
+insert into election values(1993, -16.77,3.6);
+insert into election values(1996, 4.57,-0.8);
+insert into election values(2000, -5.9,-2.7);
+insert into election values(2004, 17.94,-0.8);
+insert into election values(2008, 10.52,0.7);
+insert into election values(2011, 1.1,1.5);
+insert into election values(2015, -13,-2.5);
+insert into election values(2016, 3.29,-2.6);
